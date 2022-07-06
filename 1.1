@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+struct votante {
+	long dni;
+	int voto;
+};
+void crear(votante* v, int a) {
+	for (int i = 0; i < a; i++) {
+		v[i].dni = rand() % 100000000 + 900000000;
+		v[i].voto = rand() % 3 + 1;
+	}
+}
+void mostrar (votante* v, int a) {
+	for (int i = 0; i < a; i++) {
+		cout << "Votante numero " << i + 1 << " :" << endl;
+		cout << "Numero de DNI: " << v[i].dni << endl;
+		cout << "Voto: " << v[i].voto << endl << endl;
+	}
+}
+void cantidad(votante* v, int a) {
+	int A = 0, B = 0, C = 0;
+	for (int i = 0; i < a; i++) {
+		if (v[i].voto == 1)A++;
+		if (v[i].voto == 2)B++;
+		if (v[i].voto == 3)C++;
+	}
+	cout << "Votos por el candidato A: " << A << endl;
+	cout << "Votos por el candidato B: " << B << endl;
+	cout << "Votos en Blanco o Viciado: " << C << endl << endl;
+}
+void ganador(votante* v, int a) {
+	int A = 0, B = 0;
+	for (int i = 0; i < a; i++) {
+		if (v[i].voto == 1)A++;
+		if (v[i].voto == 2)B++;
+	}
+	if (A > B) {
+		cout << "El ganador es el candidato A" << endl << endl;
+	}
+	else if (A < B) {
+		cout << "El ganador es el candidato B" << endl << endl;
+	}
+	else {
+		cout << "Empate en las votaciones" << endl << endl;
+	}
+}
+void longevo(votante* v, int a) {
+	int b=v[0].dni;
+	for (int i = 1; i < a; i++) {
+		if (v[i].dni < b) {
+			b = v[i].dni;
+		}
+	}
+	cout << "El DNI mas longevo es: " << b;
+}
+int main() {
+	int a;
+	srand(time(NULL));
+	do {
+		cout << "Numero de votantes en la mes: ";
+		cin >> a;
+	} while (a < 1 || a >100);
+	votante *v = new votante[a];
+	crear(v, a);
+	mostrar(v, a);
+	cantidad(v, a);
+	ganador(v, a);
+	longevo(v, a);
+	cout << endl;
+	delete[]v;
+	return 0;
+}
