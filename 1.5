@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+struct carro {
+	long serie;
+	int modelo;
+	int color;
+};
+void crear(carro* v, int a) {
+	for (int i = 0; i < a; i++) {
+		v[i].serie = rand() % 900000 + 100000;
+		v[i].modelo = rand() % 4 + 1;
+		v[i].color = rand() % 3 + 1;
+	}
+}
+void mode(carro* v, int a) {
+	int A = 0, B = 0, C = 0, D=0;
+	for (int i = 0; i < a; i++) {
+		if (v[i].modelo == 1)A++;
+		if (v[i].modelo == 2)B++;
+		if (v[i].modelo == 3)C++;
+		if (v[i].modelo == 4)D++;
+	}
+	cout << "Carros de la marca Rav4: " << A << endl;
+	cout << "Carros de la marca Corolla: " << B << endl;
+	cout << "Carros de la marca Yaris: " << C << endl;
+	cout << "Carros de la marca Prius: " << D << endl << endl;
+}
+void color(carro* v, int a) {
+	int A = 0, B = 0, C = 0;
+	for (int i = 0; i < a; i++) {
+		if (v[i].color == 1)A++;
+		if (v[i].color == 2)B++;
+		if (v[i].color == 3)C++;
+	}
+	cout << "Carros del color Plateado: " << A << endl;
+	cout << "Carros del color Rojo: " << B << endl;
+	cout << "Carros del color Negro: " << C << endl << endl;
+}
+void modespe(carro* v, int a) {
+	int A = 0, B = 0, C = 0;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < a; j++) {
+			if (v[j].modelo == 1+i) {
+				if (v[j].color == 1)A++;
+				if (v[j].color == 2)B++;
+				if (v[j].color == 3)C++;
+			}
+		}
+		if (i== 0) cout << "Colores disponibles para la marca Rav4:" << endl;
+		if (i == 1) cout << "Colores disponibles para la marca Corolla: " << endl;
+		if (i == 2) cout << "Colores disponibles para la marca Yaris: " << endl;
+		if (i == 3) cout << "Colores disponibles para la marca Prius: " << endl;
+		cout << "Color Plateado: " << A << endl;
+		cout << "Color Rojo: " << B << endl;
+		cout << "Color Negro: " << C << endl << endl;
+		A = 0, B = 0, C = 0;
+	}
+}
+void colorespe(carro* v, int a) {
+	int A = 0, B = 0, C = 0, D = 0;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < a; j++) {
+			if (v[j].color == 1 + i) {
+				if (v[j].modelo == 1)A++;
+				if (v[j].modelo == 2)B++;
+				if (v[j].modelo == 3)C++;
+				if (v[j].modelo == 4)D++;
+			}
+		}
+		if (i == 0) cout << "Modelos disponibles para el color Plateado:" << endl;
+		if (i == 1) cout << "Modelos disponibles para el color Rojo: " << endl;
+		if (i == 2) cout << "Modelos disponibles para el color Negro: " << endl;
+		cout << "Marca Rav4: " << A << endl;
+		cout << "Marca Corolla: " << B << endl;
+		cout << "Marca Yaris: " << C << endl;
+		cout << "Marca Prius: " << D << endl << endl;
+		A = 0, B = 0, C = 0, D = 0;
+	}
+}
+int main() {
+	int a;
+	srand(time(NULL));
+	do {
+		cout << "Numero de carros: ";
+		cin >> a;
+	} while (a < 1 || a >200);
+	carro *v = new carro[a];
+	crear(v, a);
+	mode(v, a);
+	color(v, a);
+	modespe(v, a);
+	colorespe(v, a);
+	delete[]v;
+	return 0;
+}
