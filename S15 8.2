@@ -1,0 +1,115 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+struct publi {
+	char cliente;
+	char orden;
+	char horario;
+	int cantidad;
+};
+char* vor = new char[2]{ 'N','J' };
+char* sor = new char[2]{ 'P','V'};
+char* hor = new char[3]{ 'M','T','N'};
+void generar(publi* v, int n) {
+	for (int i = 0; i < n; i++) {
+		v[i].cliente = vor[rand() % 2];
+		v[i].orden = sor[rand()%2];
+		v[i].horario = hor[rand()%3];
+		v[i].cantidad = rand()%10 + 1;
+	}
+}
+void imprimir(publi* v, int n) {
+	cout << "Tipo de cliente  Tipo de orden  Horario         Cantidad de publicidad" << endl;
+	for (int i = 0; i < n; i++) {
+		cout << v[i].cliente << "\t\t " << v[i].orden << "\t\t" << v[i].horario << "\t\t" << v[i].cantidad << endl;
+	}
+	cout << endl;
+}
+void porc(publi* v, int n) {
+	double j = 0, na = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].cliente == 'J') j++;
+		if (v[i].cliente == 'N') na++;
+	}
+	cout << "Porcentaje cliente Juridico: " << j*100.00 / n << "%" << endl;
+	cout << "Porcentaje cliente Natural: " << na*100.00 / n << "%" << endl << endl;
+}
+void mayor(int* tipo) {
+	if (tipo[0] >= tipo[1] && tipo[0] >= tipo[2]) {
+		cout << "Manana  " << endl;
+	}
+	if (tipo[1] >= tipo[0] && tipo[1] >= tipo[2]) {
+		cout << "Tarde  " << endl;
+	}
+	if (tipo[2] >= tipo[1] && tipo[2] >= tipo[0]) {
+		cout << "Noche" << endl;
+	}
+	cout << endl;
+}
+void mayor(publi* v, int n) {
+	int* tipo = new int[3];
+	for (int i = 0; i < n; i++) {
+		if (v[i].horario == 'M') tipo[0]++;
+		if (v[i].horario == 'T') tipo[1]++;
+		if (v[i].horario == 'N') tipo[2]++;
+	}
+	cout << "Horarios con mayor numero de ordenes: " << endl;
+	mayor(tipo);
+	delete[]tipo;
+}
+void cantidad(publi* v, int n) {
+	int pp = 0, pl = 0, p = 0, l = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].orden == 'P') {
+			p++;
+			pp += v[i].cantidad;
+		}
+		if (v[i].orden == 'V') {
+			l++;
+			pl += v[i].cantidad;
+		}
+	}
+	cout << "Cantidad de publicidad promedio por pauta: " << (double)pp / p << endl;
+	cout << "Cantidad de publicidad promedio por locucion: " << (double)pl / l << endl << endl;
+}
+void ordenar(publi* v, int n) {
+	publi aux;
+	cout << "Tipo de cliente  Tipo de orden  Horario         Cantidad de publicidad" << endl;
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (v[j].horario == 'N') {
+				aux = v[i];
+				v[i] = v[j];
+				v[j] = aux;
+			}
+		}
+		for (int j = i; j < n; j++) {
+			if (v[j].horario == 'T') {
+				aux = v[i];
+				v[i] = v[j];
+				v[j] = aux;
+			}
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		cout << v[i].cliente << "\t\t " << v[i].orden << "\t\t" << v[i].horario << "\t\t" << v[i].cantidad << endl;
+	}
+	cout << endl;
+}
+int main() {
+	srand(time(NULL));
+	int n;
+	do {
+		cout << "Ingresar el numero de ordenes de publicidad: ";
+		cin >> n;
+	} while (n < 1 || n >25);
+	publi* v = new publi[n];
+	generar(v, n);
+	imprimir(v, n);
+	porc(v, n);
+	mayor(v, n);
+	cantidad(v, n);
+	ordenar(v, n);
+	delete[]v;
+	return 0;
+}
