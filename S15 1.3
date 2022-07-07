@@ -1,0 +1,126 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+void crearimprimir(int **matriz, int n) {
+	char a;
+	for (int i = 0; i < n; i++) {
+		matriz[i][0] = rand() % 5 + 1;
+		matriz[i][1] = rand() % 64 + 17;
+		matriz[i][2] = rand() % 4 ;
+	}
+	for (int i = 0; i < n; i++) {
+		if (matriz[i][2] == 0) a = 'A';
+		if (matriz[i][2] == 1) a = 'C';
+		if (matriz[i][2] == 2) a = 'L';
+		if (matriz[i][2] == 3) a = 'P';
+		cout << matriz[i][0] << "\t" << matriz[i][1] << "\t" << a;
+		cout << endl;
+	}
+	cout << endl;
+}
+void vot(int** matriz, int n) {
+	int a = 0, c = 0, l = 0, p = 0;
+	for (int i = 0; i < n; i++) {
+		if (matriz[i][2] == 0) {
+			a +=matriz[i][0];
+		}
+		if (matriz[i][2] == 1) {
+			c += matriz[i][0];
+		}
+		if (matriz[i][2] == 2) {
+			l +=matriz[i][0];
+		}
+		if (matriz[i][2] == 3) {
+			p +=matriz[i][0];
+		}
+	}
+	cout << "En Arequipa la aprobacion obtenida es: " << a << endl;
+	cout << "En Cajamarca la aprobacion obtenida es: " << c << endl;
+	cout << "En Lima la aprobacion obtenida es: " << l << endl;
+	cout << "En Puno la aprobacion obtenida es: " << p << endl;
+	cout << endl;
+}
+void abc(int**matriz, int n) {
+	int c = 0, p = 0;
+	for (int i = 0; i < n; i++) {
+		if (matriz[i][2] == 1) c++;
+		if (matriz[i][2] == 3) p++;
+	}
+	cout << "El numero de votantes en Cajamarca es: " << c << endl;
+	cout << "El numero de votantes en Puno es: " << p << endl;
+	cout << endl;
+}
+void ordenar(int** matriz, int n) {
+	int* aux = new int[3];
+	char a;
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (matriz[i][1] < matriz[j][1]) {
+				for (int l = 0; l < 3; l++) {
+					aux[l] = matriz[i][l];
+					matriz[i][l] = matriz[j][l];
+					matriz[j][l] = aux[l];
+				}
+			}
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		if (matriz[i][2] == 0) a = 'A';
+		if (matriz[i][2] == 1) a = 'C';
+		if (matriz[i][2] == 2) a = 'L';
+		if (matriz[i][2] == 3) a = 'P';
+		cout << matriz[i][0] << "\t" << matriz[i][1] << "\t" << a;
+		cout << endl;
+	}
+	cout << endl;
+	delete[]aux;
+}
+void menormayor(int** matriz, int n) {
+	int menor=100, mayor = 0;
+	for (int i = 0; i < n; i++) {
+		if (mayor < matriz[i][1]) mayor = matriz[i][1];
+		if (menor > matriz[i][1]) menor = matriz[i][1];
+	}
+	cout << "La persona con menos edad tienen " << menor << " y pertenecen a los departamentos de: " << endl;
+	for (int i = 0; i < n; i++) {
+		if (mayor == matriz[i][1]) {
+			if (matriz[i][2] == 0) cout << "Arequipa " << endl;
+			if (matriz[i][2] == 1) cout << "Cajamarca " << endl;
+			if (matriz[i][2] == 2) cout << "Lima " << endl;
+			if (matriz[i][2] == 3) cout << "Puno " << endl;
+		}
+	}
+	cout << endl;
+	cout << "Las personas con mas edad tienen " << mayor << " y pertenecen a los departamentos de: " << endl;
+	for (int i = 0; i < n; i++) {
+		if (mayor == matriz[i][1]) { 
+			if (matriz[i][2] == 0) cout << "Arequipa " << endl;
+			if (matriz[i][2] == 1) cout << "Cajamarca " << endl;
+			if (matriz[i][2] == 2) cout << "Lima " << endl;
+			if (matriz[i][2] == 3) cout << "Puno " << endl;
+		}
+	}
+	cout << endl;
+}
+int main() {
+	int n;
+	srand(time(NULL));
+	do {
+		cout << "Cantidad de personas encuestadas: ";
+		cin >> n;
+	} while (n < 1 || n >50);
+	int** matriz = new int*[n];
+	for (int i = 0; i < n; i++) {
+		matriz[i] = new int[3];
+	}
+	crearimprimir(matriz, n);
+	vot(matriz, n);
+	abc(matriz, n); 
+	ordenar(matriz, n);
+	menormayor(matriz, n);
+	for (int i = 0; i < n; i++) {
+		delete[]matriz[i];
+	}
+	delete[]matriz;
+	return 0;
+}
