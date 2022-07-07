@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+#define f  10
+#define c  15
+void generarmostrar(int** matriz) {
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			matriz[i][j] = rand() % 3 + 1;
+		}
+	}
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			cout << matriz[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+void mayor(int* tipo) {
+	if (tipo[0] >= tipo[1] && tipo[0] >= tipo[2]) {
+		cout << "La mayor frecuencia es la Zanahoria" << endl;
+	}
+	if (tipo[1] >= tipo[0] && tipo[1] >= tipo[2]) {
+		cout << "La mayor frecuencia es la Berenjena" << endl;
+	}
+	if (tipo[2] >= tipo[1] && tipo[2] >= tipo[0]) {
+		cout << "La mayor frecuencia es el Nabo" << endl;
+	}
+	cout << endl;
+}
+void menor(int* tipo) {
+	if (tipo[0] <= tipo[1] && tipo[0] <= tipo[2]) {
+		cout << "La mayor frecuencia es la Zanahori" << endl;
+	}
+	if (tipo[1] <= tipo[0] && tipo[1] <= tipo[2]) {
+		cout << "La menor frecuencia es la Berenjena" << endl;
+	}
+	if (tipo[2] <= tipo[1] && tipo[2] <= tipo[0]) {
+		cout << "La menor frecuencia es el Nabo" << endl;
+	}
+	cout << endl;
+}
+void tipos(int** matriz) {
+	int* tipo = new int[3]{ 0,0,0 };
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			if (matriz[i][j] == 1)tipo[0]++;
+			if (matriz[i][j] == 2)tipo[1]++;
+			if (matriz[i][j] == 3)tipo[2]++;
+		}
+	}
+	mayor(tipo);
+	menor(tipo);
+	delete[]tipo;
+}
+void especial(int** matriz) {
+	int e = 0;
+	cout << "Los puntos donde puede existir una Guarida de los Topos:" << endl;
+	for (int i = 1; i < f - 1; i++) {
+		for (int j = 1; j < c - 1; j++) {
+			if (matriz[i - 1][j] == 3 && matriz[i + 1][j] == 1  && matriz[i][j - 1] == 2 && matriz[i][j + 1] == 2) {
+				cout << "Fila: " << i + 1 << ", Columna: " << j + 1 << endl;
+				e++;
+			}
+		}
+	}
+	if (e == 0) {
+		cout << "No se ha encontrado" << endl;
+	}
+	cout << endl;
+	cout << "Total de apariciones: " << e << endl;
+}
+int main() {
+	srand(time(NULL));
+	int** matriz = new int* [f];
+	for (int i = 0; i < f; i++) {
+		matriz[i] = new int[c];
+	}
+	generarmostrar(matriz);
+	tipos(matriz);
+	especial(matriz);
+	for (int i = 0; i < f; i++) {
+		delete[]matriz[i];
+	}
+	delete[]matriz;
+	return 0;
+}
