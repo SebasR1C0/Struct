@@ -1,0 +1,110 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+struct votantes {
+	int des;
+	int edad;
+	char lugar;
+};
+void crearimprimir(votantes *v, int n) {
+	char lugares[4] = {'A','C', 'L','P'};
+	for (int i = 0; i < n; i++) {
+		v[i].des = rand() % 5 + 1;
+		v[i].edad = rand() % 64 + 17;
+		v[i].lugar = lugares[rand() % 4] ;
+		cout << v[i].des << "\t" << v[i].edad << "\t" << v[i].lugar;
+		cout << endl;
+	}
+	cout << endl;
+}
+void vot(votantes *v, int n) {
+	int a = 0, c = 0, l = 0, p = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].lugar == 'A') {
+			a += v[i].des;
+		}
+		if (v[i].lugar == 'C') {
+			c += v[i].des;
+		}
+		if (v[i].lugar == 'L') {
+			l += v[i].des;
+		}
+		if (v[i].lugar == 'P') {
+			p += v[i].des;
+		}
+	}
+	cout << "En Arequipa la aprobacion obtenida es: " << a << endl;
+	cout << "En Cajamarca la aprobacion obtenida es: " << c << endl;
+	cout << "En Lima la aprobacion obtenida es: " << l << endl;
+	cout << "En Puno la aprobacion obtenida es: " << p << endl;
+	cout << endl;
+}
+void abc (votantes * v, int n) {
+	int c = 0, p = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].lugar == 'C') c++;
+		if (v[i].lugar == 'P') p++;
+	}
+	cout << "El numero de votantes en Cajamarca es: " << c << endl;
+	cout << "El numero de votantes en Puno es: " << p << endl;
+	cout << endl;
+}
+void ordenar(votantes* v, int n) {
+	votantes aux;
+	char a;
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (v[i].edad < v[j].edad) {
+				aux = v[i];
+				v[i] = v[j];
+				v[j] = aux;
+			}
+		}
+		cout << v[i].des << "\t" << v[i].edad << "\t" << v[i].lugar;
+		cout << endl;
+	}
+	cout << endl;
+}
+void menormayor(votantes* v, int n) {
+	int menor=100, mayor = 0;
+	for (int i = 0; i < n; i++) {
+		if (mayor < v[i].edad) mayor = v[i].edad;
+		if (menor > v[i].edad) menor = v[i].edad;
+	}
+	cout << "La persona con menos edad tienen " << menor << " y pertenecen a los departamentos de: " << endl;
+	for (int i = 0; i < n; i++) {
+		if (mayor == v[i].edad) {
+			if (v[i].lugar == 'A') cout << "Arequipa " << endl;
+			if (v[i].lugar == 'C') cout << "Cajamarca " << endl;
+			if (v[i].lugar == 'L') cout << "Lima " << endl;
+			if (v[i].lugar == 'P') cout << "Puno " << endl;
+		}
+	}
+	cout << endl;
+	cout << "Las personas con mas edad tienen " << mayor << " y pertenecen a los departamentos de: " << endl;
+	for (int i = 0; i < n; i++) {
+		if (mayor == v[i].edad) {
+			if (v[i].lugar == 'A') cout << "Arequipa " << endl;
+			if (v[i].lugar == 'C') cout << "Cajamarca " << endl;
+			if (v[i].lugar == 'L') cout << "Lima " << endl;
+			if (v[i].lugar == 'P') cout << "Puno " << endl;
+		}
+	}
+	cout << endl;
+}
+int main() {
+	int n;
+	srand(time(NULL));
+	do {
+		cout << "Cantidad de personas encuestadas: ";
+		cin >> n;
+	} while (n < 1 || n >50);
+	votantes* v = new votantes[n];
+	crearimprimir(v, n);
+	vot(v, n);
+	abc(v, n); 
+	ordenar(v, n);
+	menormayor(v, n);
+	delete[]v;
+	return 0;
+}
