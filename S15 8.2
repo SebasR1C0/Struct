@@ -1,5 +1,4 @@
 #include <iostream>
-#include <conio.h>
 using namespace std;
 struct publi {
 	char cliente;
@@ -73,20 +72,15 @@ void cantidad(publi* v, int n) {
 	cout << "Cantidad de publicidad promedio por locucion: " << (double)pl / l << endl << endl;
 }
 void ordenar(publi* v, int n) {
-	publi aux;
 	cout << "Tipo de cliente  Tipo de orden  Horario         Cantidad de publicidad" << endl;
 	for (int i = 0; i < n; i++) {
 		for (int j = i; j < n; j++) {
 			if (v[i].horario < v[j].horario) {
-				aux = v[i];
-				v[i] = v[j];
-				v[j] = aux;
+				swap(v[i], v[j]);
 			}
 			else if (v[i].horario == v[j].horario) {
 			if (v[i].cantidad > v[j].cantidad) {
-					aux = v[i];
-					v[i] = v[j];
-					v[j] = aux;
+				swap(v[i], v[j]);
 				}
 			}
 		}
