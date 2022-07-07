@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+#define f  10
+#define c  15
+void generarmostrar(char **matriz) {
+	char tipoquinua[3] = { 'R', 'N', 'B' };
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			matriz[i][j] = tipoquinua[rand() % 3];
+		}
+	}
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			cout << matriz[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+void mayor(int* tipo) {
+	if (tipo[0] >= tipo[1] && tipo[0] >= tipo[2]) {
+		cout << "La mayor frecuencia es la Quinua Roja" << endl;
+	}
+	if (tipo[1] >= tipo[0] && tipo[1] >= tipo[2]) {
+		cout << "La mayor frecuencia es la Quinua Negra" << endl;
+	}
+	if (tipo[2] >= tipo[1] && tipo[2] >= tipo[0]) {
+		cout << "La mayor frecuencia es la Quinua Blanca" << endl;
+	}
+	cout << endl;
+}
+void menor(int* tipo) {
+	if (tipo[0] <= tipo[1] && tipo[0] <= tipo[2]) {
+		cout << "La menor frecuencia es la Quinua Roja" << endl;
+	}
+	if (tipo[1] <= tipo[0] && tipo[1] <= tipo[2]) {
+		cout << "La menor frecuencia es la Quinua Negra" << endl;
+	}
+	if (tipo[2] <= tipo[1] && tipo[2] <= tipo[0]) {
+		cout << "La menor frecuencia es la Quinua Blanca" << endl;
+	}
+	cout << endl;
+}
+void tipos(char** matriz) {
+	int *tipo = new int[3]{0,0,0};
+	for (int i = 0; i < f; i++) {
+		for (int j = 0; j < c; j++) {
+			if (matriz[i][j] == 'R')tipo[0]++;
+			if (matriz[i][j] == 'N')tipo[1]++;
+			if (matriz[i][j] == 'B')tipo[2]++;
+		}
+	}
+	mayor(tipo);
+	menor(tipo);
+	delete[]tipo;
+}
+void especial(char** matriz) {
+	int e = 0;
+	cout << "Los puntos donde puede existir una planta de Quinua Especial:" << endl;
+	for (int i = 1; i < f-1; i++) {
+		for (int j = 1; j < c-1; j++) {
+			if (matriz[i - 1][j] == 'R' && matriz[i + 1][j] == 'R' && matriz[i - 1][j + 1] == 'B' && matriz[i][j - 1] == 'B'
+				&& matriz[i + 1][j - 1] == 'N' && matriz[i][j + 1] == 'N') {
+				cout << "Fila: " << i+1 << ", Columna: " << j+1 << endl;
+				e++;
+			}
+		}
+	}
+	if (e == 0) {
+		cout << "No se ha encontrado" << endl;
+	}
+	cout << endl;
+	cout << "Total de apariciones: " << e << endl;
+}
+int main() {
+	srand(time(NULL));
+	char**matriz = new char*[f];
+	for (int i = 0; i < f; i++) {
+		matriz[i] = new char[c];
+	}
+	generarmostrar(matriz);
+	tipos(matriz);
+	especial(matriz);
+	for (int i = 0; i < f; i++) {
+		delete[]matriz[i];
+	}
+	delete[]matriz;
+	return 0;
+}
