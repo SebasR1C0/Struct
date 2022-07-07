@@ -1,0 +1,79 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+struct alumno {
+	int codigo;
+	int credito;
+	int acumulado;
+};
+void crearimprimir(alumno *v, int n) {
+	for (int i = 0; i < n; i++) {
+		v[i].codigo = rand()%90000 + 100000;
+		v[i].credito = rand() % 11 + 10;
+		v[i].acumulado= rand() % 16 + 5;
+		cout << v[i].codigo << "\t " << v[i].credito << "\t" << v[i].acumulado << endl;
+	}
+}
+void asc(alumno* v, int n) {
+	alumno aux;
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (v[i].credito < v[j].credito) {
+				aux = v[i];
+				v[i] = v[j];
+				v[j] = aux;
+
+			}
+		}
+		cout << v[i].codigo << "\t " << v[i].credito << "\t" << v[i].acumulado << endl;
+	}
+}
+void des(alumno* v, int n) {
+	alumno aux;
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (v[i].acumulado > v[j].acumulado) {
+				aux = v[i];
+				v[i] = v[j];
+				v[j] = aux;
+
+			}
+		}
+		cout << v[i].codigo << "\t " << v[i].credito << "\t" << v[i].acumulado << endl;
+	}
+}
+void cre(alumno* v, int n) {
+	int a = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].credito > 15) a++;
+	}
+	cout << "La cantidad de alumnos con mas de 15 creditos matriculados es: " << a << endl;
+}
+void apr(alumno* v, int n) {
+	int a = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].acumulado >= 13) a++;
+	}
+	cout << "La cantidad de alumnos con promedio acumulado aprobado es: " << a << endl;
+}
+int main() {
+	int n;
+	srand(time(NULL));
+	do {
+		cout << "Cantidad de alumnos en la carrera: ";
+		cin >> n;
+	} while (n<1 || n >50);
+	alumno* v = new alumno[n];
+	crearimprimir(v, n);
+	cout << endl;
+	asc(v, n);
+	cout << endl;
+	des(v, n);
+	cout << endl;
+	cre(v, n);
+	cout << endl;
+	apr(v, n);
+	cout << endl;
+	delete[]v;
+	return 0;
+}
