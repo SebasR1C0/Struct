@@ -1,0 +1,82 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+int* momo = new int[3]{ 0,2,5 };
+void generar(int *mensaje, int n) {
+	for (int i = 0; i < n; i++) {
+		mensaje[i] = momo[rand() % 3];
+	}
+}
+void imprimir(int* mensaje, int n) {
+	for (int i = 0; i < n; i++) {
+		cout << mensaje[i];
+	}
+}
+bool frio(int* mensaje) {
+	if (mensaje[0] == 2 && mensaje[1] == 5 && mensaje[2] == 2) {
+		return true;
+	}
+	return false;
+}
+bool calor(int* mensaje, int n) {
+	for (int i = 0; i < n - 4; i++) {
+		if (mensaje[i] == 2 && mensaje[i+2] == 0 && mensaje[i+4] == 2) {
+			return true;
+		}
+	}
+	return false;
+}
+bool hambre(int* mensaje, int n) {
+	if (mensaje[n-3] == 5 && mensaje[n-2] == 0 && mensaje[n-1] == 2) {
+		return true;
+	}
+	return false;
+}
+bool peligro(int* mensaje, int n) {
+	for (int i = 0; i < n - 2; i++) {
+		if (mensaje[i] == 0 && mensaje[i + 1] == 0 && mensaje[i + 2] == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+int main() {
+	char abc;
+	int n, f = 0, c = 0, h = 0, t = 0;
+	srand(time(NULL));
+	do {
+		n = rand() % 11 + 10;
+		int* mensaje = new int[n];
+		generar(mensaje, n);
+		imprimir(mensaje, n);
+		cout << endl;
+		if (frio(mensaje)) {
+			cout << "Las personas tienen frio" << endl;
+			f++;
+			t++;
+		}
+		if (calor( mensaje, n)) {
+			cout << "Las personas tienen calor" << endl;
+			c++;
+			t++;
+		}
+		if (hambre(mensaje, n)) {
+			cout << "Las personas tienen hambre" << endl;
+			h++;
+			t++;
+		}
+		if (peligro(mensaje, n)) {
+			cout << "Peligro!" << endl;
+			t++;
+		}
+		cout << endl;
+		delete[]mensaje;
+		abc = _getch();
+		abc = toupper(abc);
+	} while (abc != 'T');
+	cout << "Cantidad de mensajes que se procesaron: " << t << endl;
+	cout << "La cantidad de veces que se ha solicitado abrigo: " << f << endl;
+	cout << "La cantidad de veces que se ha solicitado agua: " << c << endl;
+	cout << "La cantidad de veces que se ha solicitado alimento: " << h << endl;
+	return 0;
+}
