@@ -77,21 +77,19 @@ void ordenar(publi* v, int n) {
 	cout << "Tipo de cliente  Tipo de orden  Horario         Cantidad de publicidad" << endl;
 	for (int i = 0; i < n; i++) {
 		for (int j = i; j < n; j++) {
-			if (v[j].horario == 'N') {
+			if (v[i].horario < v[j].horario) {
 				aux = v[i];
 				v[i] = v[j];
 				v[j] = aux;
 			}
-		}
-		for (int j = i; j < n; j++) {
-			if (v[j].horario == 'T') {
-				aux = v[i];
-				v[i] = v[j];
-				v[j] = aux;
+			else if (v[i].horario == v[j].horario) {
+			if (v[i].cantidad > v[j].cantidad) {
+					aux = v[i];
+					v[i] = v[j];
+					v[j] = aux;
+				}
 			}
 		}
-	}
-	for (int i = 0; i < n; i++) {
 		cout << v[i].cliente << "\t\t " << v[i].orden << "\t\t" << v[i].horario << "\t\t" << v[i].cantidad << endl;
 	}
 	cout << endl;
