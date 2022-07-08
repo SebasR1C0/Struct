@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+#define n 20
+void generar(int* v) {
+	for (int i = 0; i < n; i++) {
+		v[i] = rand() % 119 + 32;
+	}
+}
+void imprimir(int *v) {
+	cout << "Marca  ";
+	for (int i = 0; i < n; i++) {
+		if (i < 10) cout << i << "   ";
+		else cout << i << "  ";
+	}
+	cout << endl << "Azucar ";
+	for (int i = 0; i < n; i++) {
+		if (v[i]<100) cout << v[i] << "  ";
+		else cout << v[i] << " ";
+	}
+	cout << endl << endl;
+}
+void permi(int *v) {
+	int p = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i] <= 37) p++;
+	}
+	cout << p << " marcas no sobrepasan el valor permitido" << endl << endl;
+}
+void menor(int* v) {
+	int p = v[0], ac;
+	for (int i = 1; i < n; i++) {
+		if (v[i] < p) {
+			p = v[i];
+			ac = i;
+		}
+	}
+	cout << "La Marca " << ac << " tiene la menor cantidad de azucar" << endl << endl;
+}
+void abc(int* v) {
+	for (int i = 1; i < n; i++) {
+		if (v[i] >= 120) {
+			cout << "La Marca " << i << " :no cumple con la norma" << endl;
+		}
+	}
+	cout << endl;
+}
+int main() {
+	srand(time(NULL));
+	int* v = new int[n];
+	generar(v);
+	imprimir(v);
+	permi(v);
+	menor(v);
+	abc(v);
+	delete[]v;
+	return 0;
+}
