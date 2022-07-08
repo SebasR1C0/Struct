@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+struct tras {
+	char ope;
+	int mon;
+};
+char digito[2] = { 'R', 'D' };
+void generar(tras* v, int n) {
+	for (int i = 0; i < n; i++) {
+		v[i].ope = digito[rand() % 2];
+		v[i].mon = rand() % 1451 + 50;
+	}
+	cout << endl;
+}
+void imprimir(tras* v, int n) {
+	cout << "Operacion  Monto" << endl;
+	for (int i = 0; i < n; i++) {
+		cout << v[i].ope << "\t   " << v[i].mon << endl;
+	}
+	cout << endl;
+}
+void fre(tras* v, int n) {
+	int r = 0, d = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].ope == 'R')r++;
+		if (v[i].ope == 'D')d++;
+	}
+	cout << "La frecuencia mayor es: " << endl;
+	if (r >= d) cout << "Retiro" << endl;
+	if (r <= d) cout << "Deposito" << endl;
+	cout << endl;
+}
+void pro(tras* v, int n) {
+	int r = 0, pr = 0;
+	for (int i = 0; i < n; i++) {
+		if (v[i].ope == 'R') {
+			pr += v[i].mon;
+			r++;
+		}
+	}
+	cout << "El promedio de retiros es: "<< (double)pr/r << endl;
+	cout << endl;
+}
+void ord(tras* v, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = i; j < n; j++) {
+			if (v[i].mon < v[j].mon) {
+				swap(v[i], v[j]);
+			}
+			else if (v[i].mon == v[j].mon) {
+				if (v[i].ope > v[j].ope) {
+					swap(v[i], v[j]);
+				}
+			}
+		}
+	}
+	imprimir(v, n);
+}
+int main() {
+	srand(time(NULL));
+	int n;
+	do {
+		cout << "Ingrese el numero del transacciones: ";
+		cin >> n;
+	} while (n<15 || n>50);
+	tras* v = new tras[n];
+	generar(v,n);
+	imprimir(v, n);
+	fre(v, n);
+	pro(v, n);
+	ord(v, n);
+	delete[]v;
+	return 0;
+}
